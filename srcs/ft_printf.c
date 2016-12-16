@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 16:31:07 by cbegne            #+#    #+#             */
-/*   Updated: 2016/12/16 20:31:47 by cbegne           ###   ########.fr       */
+/*   Updated: 2016/12/16 20:49:10 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		ft_printf(const char *format, ...)
 			format++;
 			nb++;
 		}
-	//	printf("f %c\n", *format);
 	}
 	va_end(ap);
 	return (nb);
