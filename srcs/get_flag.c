@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 19:59:08 by cbegne            #+#    #+#             */
-/*   Updated: 2016/12/14 19:09:29 by cbegne           ###   ########.fr       */
+/*   Updated: 2016/12/19 11:31:22 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	get_flag(const char **format, t_print *param)
 			param->plus_sign = 1;
 		else if (**format == ' ')
 			param->blank = 1;
-		else if (param->plus_sign == 1 && param->blank == 1)
+		if (param->plus_sign == 1 && param->blank == 1)
 			param->blank = 0;
 		(*format)++;
 	}

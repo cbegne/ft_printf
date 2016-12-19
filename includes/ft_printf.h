@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 15:31:45 by cbegne            #+#    #+#             */
-/*   Updated: 2016/12/16 20:17:38 by cbegne           ###   ########.fr       */
+/*   Updated: 2016/12/19 18:44:24 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,17 @@ void	get_index(const char **format, t_print *param);
 char	*convert_and_apply(va_list ap, t_print *param);
 uintmax_t	unsigned_convert(va_list ap, t_print *param);
 char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base);
+int		check_param_unsigned(t_print *param, int nb);
+char	*apply_param_unsigned(t_print *param, char *out, int size);
 
 void	ft_putchar(char c);
 int		ft_atoi(char *s);
 int		ft_isdigit(int n);
 void	ft_bzero(void *s, size_t n);
 char	*ft_strncpy(char *dst, char *src, size_t len);
-char	*ft_strnew(size_t size);
+char	*ft_strcnew(size_t size, char c);
 int		ft_abs(int n);
 void	ft_putstr(char *s);
-
-void	ft_putnbr(int i);
+int		ft_toupper(int c);
 
 #endif

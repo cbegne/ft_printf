@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 19:07:49 by cbegne            #+#    #+#             */
-/*   Updated: 2016/12/16 20:38:53 by cbegne           ###   ########.fr       */
+/*   Updated: 2016/12/19 18:48:43 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static int		count_size(uintmax_t value, int base)
 {
-	int	nb;
+	size_t	nb;
 
 	nb = 0;
-//	if (base == 10 && value < 0)
-//		nb++;
 	if (value == 0)
 		return (1);
 	while (value != 0)
@@ -35,22 +33,30 @@ char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base)
 {
 	char	tab[16];
 	char	*out;
-	int		nb;
+	size_t		nb;
+	size_t		new_nb;
 	uintmax_t	arg;
 
 	arg = unsigned_convert(ap, param);
-	if (param->index == 'X')
-		ft_strncpy(tab, "0123456789ABCDEF", base);
-	else
-		ft_strncpy(tab, "0123456789abcdef", base);
+	ft_strncpy(tab, "0123456789abcdef", base);
 	nb = count_size(arg, base);
-	// nb = nb + check_param()
-	if (!(out = ft_strnew(nb)))
+	new_nb = check_param_unsigned(param, nb);
+//	printf("new_nb %d\n", new_nb);
+//	printf("nb %d\n", nb);
+	if (!(out = ft_strcnew(new_nb, '0')))
 		return (NULL);
-	while (--nb >= 0)
-{
-		out[nb] = tab[ft_abs(arg % base)];
+	nb = new_nb - nb;
+	if (nb > 0)
+		out = apply_param_unsigned(param, out, nb);
+	while (new_nb >= nb)
+	{
+		new_nb--;
+		out[new_nb] = tab[ft_abs(arg % base)];
+		printf("%d %c\n", new_nb, out[new_nb]);
 		arg = arg / base;
 	}
+	nb = 0;
+	while (param->index == 'X' && out[nb])
+		ft_toupper(out[nb++]);
 	return (out);
 }
