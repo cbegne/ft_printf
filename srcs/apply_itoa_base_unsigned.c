@@ -43,8 +43,6 @@ char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base)
 	ft_strncpy(tab, "0123456789abcdef", base);
 	nb = count_size(arg, base);
 	new_nb = check_param_unsigned(param, nb);
-//	printf("new_nb %zu\n", new_nb);
-//	printf("nb %zu\n", nb);
 	if (!(out = ft_strcnew(new_nb, '0')))
 		return (NULL);
 	nb = new_nb - nb;
@@ -54,8 +52,6 @@ char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base)
 	{
 		new_nb--;
 		out[new_nb] = tab[ft_abs(arg % base)];
-//		printf("out[%zu] = %c\n", new_nb, out[new_nb]);
-//		printf("nb %zu\n", nb);
 		arg = arg / base;
 	}
 	nb = 0;
