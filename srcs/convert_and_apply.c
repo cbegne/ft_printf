@@ -15,7 +15,7 @@
 char	*convert_and_apply(va_list ap, t_print *param)
 {
 	char	*out;
-	
+		
 //	if (param->index == 'i' || param->index == 'd' || param->index == 'D')
 		//apply (intmax_t)
 	if (param->index == 'u')
@@ -32,6 +32,8 @@ char	*convert_and_apply(va_list ap, t_print *param)
 		//apply (char)
 //	else if (param->index == 'C')
 		// apply (wchar_t)
+	else 
+		out = NULL;
 	return (out);
 }
 

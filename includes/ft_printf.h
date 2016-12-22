@@ -53,7 +53,7 @@ char	*convert_and_apply(va_list ap, t_print *param);
 uintmax_t	unsigned_convert(va_list ap, t_print *param);
 char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base);
 int		check_param_unsigned(t_print *param, int nb);
-char	*apply_param_unsigned(t_print *param, char *out, int size);
+void	apply_param_unsigned(t_print *param, char *out, int size);
 
 void	ft_putchar(char c);
 int		ft_atoi(char *s);
@@ -63,6 +63,7 @@ char	*ft_strncpy(char *dst, char *src, size_t len);
 char	*ft_strcnew(size_t size, char c);
 int		ft_abs(int n);
 void	ft_putstr(char *s);
-int		ft_toupper(int c);
+void		ft_strupper(char *s);
+int	ft_max(int nb1, int nb2);
 
 #endif

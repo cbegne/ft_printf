@@ -12,17 +12,26 @@
 
 #include "ft_printf.h"
 
-char	*apply_param_unsigned(t_print *param, char *out, int size)
+/** apply flags to tab : first characters
+*** out is filled with '0' when created
+*** Precision wins on width => number of ' ' = width - precision
+*** If #x, '0x' wins on width => must adjust number of spaces
+*** If '#o', must leave one charater for '0'
+**/
+
+void	apply_param_unsigned(t_print *param, char *out, int size)
 {
 	int	i;
 	int	space;
 
 	i = 0;
-//	printf("prec %d\n", param->precision);
 	space = param->width - param->precision;
-//	printf("space %d\n", space);
-	if (param->sharp_prefix == 2)
+	if (param->sharp_prefix == 2 && size == 2)
+		space = 0; 
+	else if (param->sharp_prefix == 2)
 		space = space - 2;
+	else if (param->sharp_prefix == 1)
+		size-- ;
 	while (i < space && i < size)
 		out[i++] = ' ';
 	if (param->sharp_prefix == 2)
@@ -30,5 +39,4 @@ char	*apply_param_unsigned(t_print *param, char *out, int size)
 		out[i++] = '0';
 		out[i++] = 'x';
 	}
-	return (out);
 }

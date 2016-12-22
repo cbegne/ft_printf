@@ -14,7 +14,13 @@
 
 int		main(void)
 {
-	ft_printf("me %#5.6o\n", 255);
-	printf("it %#5.6o\n", 255);
+	char	*out;
+
+//	ft_printf("me %%\n", 4095);
+	ft_printf("me %%tnd\n");
+//	ft_printf("me %#6.2o\n", 4095);
+//	printf("it %%\n", 4095);
+	printf("it %%tnd\n");
+//	printf("it %#6.2o\n", 4095);
 	return (0);
 }

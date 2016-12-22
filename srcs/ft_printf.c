@@ -27,15 +27,15 @@ int		ft_printf(const char *format, ...)
 		{
 			format++;
 			param = parse(&format, ap, &param);
-			out = convert_and_apply(ap, param);
-			ft_putstr(out);
-			//count
+			if ((out = convert_and_apply(ap, param)))
+				ft_putstr(out);
+			nb = nb + param->count;
 		}
 		else
 		{
 			ft_putchar(*format);
-			format++;
 			nb++;
+			format++;
 		}
 	}
 	va_end(ap);

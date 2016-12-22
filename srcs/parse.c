@@ -24,7 +24,10 @@ t_print		*parse(const char **format, va_list ap, t_print **param)
 		get_length(format, *param);
 		get_index(format, *param);
 	}
-	if ((*param)->index == 0)
+	if ((*param)->index == 0 && **format == '%')
+	{
 		ft_putchar(**format);
+		(*param)->count++;
+	}
 	return (*param);
 }

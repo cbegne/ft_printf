@@ -27,7 +27,9 @@ static int		count_size(uintmax_t value, int base)
 	return (nb);
 }
 
-/** for unsigned conv -> u base 10 || o and O base 8 || x and X base 16 **/
+/** For unsigned conv -> u base 10 || o and O base 8 || x and X base 16 
+*** out is filled with '0' when created, used for precision and #o
+**/
 
 char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base)
 {
@@ -41,22 +43,23 @@ char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base)
 	ft_strncpy(tab, "0123456789abcdef", base);
 	nb = count_size(arg, base);
 	new_nb = check_param_unsigned(param, nb);
-//	printf("new_nb %d\n", new_nb);
-//	printf("nb %d\n", nb);
+//	printf("new_nb %zu\n", new_nb);
+//	printf("nb %zu\n", nb);
 	if (!(out = ft_strcnew(new_nb, '0')))
 		return (NULL);
 	nb = new_nb - nb;
 	if (nb > 0)
-		out = apply_param_unsigned(param, out, nb);
-	while (new_nb >= nb)
+		apply_param_unsigned(param, out, nb);
+	while (new_nb > nb)
 	{
 		new_nb--;
 		out[new_nb] = tab[ft_abs(arg % base)];
-		printf("%d %c\n", new_nb, out[new_nb]);
+//		printf("out[%zu] = %c\n", new_nb, out[new_nb]);
+//		printf("nb %zu\n", nb);
 		arg = arg / base;
 	}
 	nb = 0;
-	while (param->index == 'X' && out[nb])
-		ft_toupper(out[nb++]);
+	if (param->index == 'X')
+		ft_strupper(out);
 	return (out);
 }
