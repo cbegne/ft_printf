@@ -33,8 +33,8 @@ static int		count_size(uintmax_t value, int base)
 
 char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base)
 {
-	char	tab[16];
-	char	*out;
+	char		tab[16];
+	char		*out;
 	size_t		nb;
 	size_t		new_nb;
 	uintmax_t	arg;
@@ -42,19 +42,20 @@ char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base)
 	arg = unsigned_convert(ap, param);
 	ft_strncpy(tab, "0123456789abcdef", base);
 	nb = count_size(arg, base);
-	new_nb = check_param_unsigned(param, nb);
+	new_nb = check_param_unsigned(param, nb, arg);
 	if (!(out = ft_strcnew(new_nb, '0')))
 		return (NULL);
-	nb = new_nb - nb;
-	if (nb > 0)
-		apply_param_unsigned(param, out, nb);
-	while (new_nb > nb)
+	if (param->sharp_prefix == -1)
+		nb = 0;
+	apply_no_minus_left(param, out, new_nb - nb);
+	apply_minus_left(param, out, nb, &new_nb);
+//	printf("nb %zu new_nb %zu\n", nb, new_nb);
+	while (nb--)
 	{
-		new_nb--;
-		out[new_nb] = tab[ft_abs(arg % base)];
+		out[--new_nb] = tab[ft_abs(arg % base)];
+//		printf("out[%zu] = %c\n", new_nb, out[new_nb]);
 		arg = arg / base;
 	}
-	nb = 0;
 	if (param->index == 'X')
 		ft_strupper(out);
 	return (out);

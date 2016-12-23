@@ -14,13 +14,20 @@
 
 int		main(void)
 {
-	char	*out;
+	int i;
+	int j;	
 
-//	ft_printf("me %%\n", 4095);
-	ft_printf("me %%tnd\n");
-//	ft_printf("me %#6.2o\n", 4095);
-//	printf("it %%\n", 4095);
-	printf("it %%tnd\n");
-//	printf("it %#6.2o\n", 4095);
+	i = ft_printf("1me %5.o\n", 0);
+	j = printf("1it %5.o\n", 0);
+	printf("%d %d\n", i, j);
+	i = ft_printf("2me %5.0o\n", 0);
+	j = printf("2it %5.0o\n", 0);
+	printf("%d %d\n", i, j);
+	i = ft_printf("3me %5.x\n", 0);
+	j = printf("3it %5.x\n", 0);
+	printf("%d %d\n", i, j);
+	i = ft_printf("4me %5.0x\n", 0);
+	j = printf("4it %5.0x\n", 0);
+	printf("%d %d\n", i, j);
 	return (0);
 }

@@ -17,6 +17,7 @@ void	get_precision(const char **format, t_print *param, va_list ap)
 	if (**format == '.')
 	{
 		(*format)++;
+		param->precision = 0;
 		if (**format == '*')
 		{
 			param->precision = va_arg(ap, int);

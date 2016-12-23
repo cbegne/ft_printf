@@ -15,9 +15,9 @@
 int		ft_printf(const char *format, ...)
 {
 	va_list ap;
-	int		nb;
-	t_print	*param;
+	int	nb;
 	char	*out;
+	t_print	*param;
 	
 	va_start(ap, format);
 	nb = 0;
@@ -30,6 +30,8 @@ int		ft_printf(const char *format, ...)
 			if ((out = convert_and_apply(ap, param)))
 				ft_putstr(out);
 			nb = nb + param->count;
+			free(out);
+			free(param);
 		}
 		else
 		{

@@ -14,6 +14,7 @@
 
 t_print		*parse(const char **format, va_list ap, t_print **param)
 {
+	*param = ft_memalloc(sizeof(t_print));
 	ft_bzero(*param, sizeof(t_print));
 	(*param)->precision = -1;
 	while ((is_flag(**format) || ft_isdigit(**format) || **format == '.' || is_length(**format) || is_index(**format)) && (*param)->index == 0)

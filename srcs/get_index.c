@@ -15,8 +15,8 @@
 int		is_index(char c)
 {
 	return ((c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' || \
-				c == 'i' || c == 'o' || c == 'O' || c == 'u' || c == 'x' || \
-				c == 'X' || c == 'c' || c == 'C') ? 1 : 0);
+				c == 'i' || c == 'o' || c == 'O' || c == 'u' || \
+c == 'U' || c == 'x' || c == 'X' || c == 'c' || c == 'C') ? 1 : 0);
 }
 
 void	get_index(const char **format, t_print *param)

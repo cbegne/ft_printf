@@ -20,19 +20,32 @@
 *** 	=> must add enough space
 *** No impact of other flags.
 **/
-
-int		check_param_unsigned(t_print *param, int nb)
+static int	weird_precision_zero(t_print *param, uintmax_t arg)
 {
-	int		max;
+	if (arg == 0 && param->precision == 0)
+	{
+		if (param->index == 'x' || param->index == 'X' || \
+			(param->index == 'o' && param->sharp_prefix == 0))
+		{
+			param->sharp_prefix = -1;
+			return (param->width);
+		}
+	}
+	return (-1);
+}
+
+size_t		check_param_unsigned(t_print *param, size_t nb, uintmax_t arg)
+{
+	size_t		max;
 	
-	max = 0;
-	if (param->width != 0 || param->precision != -1)
-		max = ft_max(param->width, param->precision);
+	if ((max = weird_precision_zero(param, arg)) != -1)
+		return (max);
+	max = ft_max(param->width, param->precision);
 	if (param->sharp_prefix == 1)
 	{
-		if (param->index == 'o')
+		if (param->index == 'o' && arg != 0)
 			nb++;
-		else if (param->index == 'x' || param->index == 'X')
+		else if ((param->index == 'x' || param->index == 'X') && arg != 0)
 		{
 			if (param->width - param->precision == 1)
 				max = max + 1;	
@@ -41,7 +54,7 @@ int		check_param_unsigned(t_print *param, int nb)
 			nb = nb + 2;
 			param->sharp_prefix = 2;
 		}
-		else 
+		else
 			param->sharp_prefix = 0;
 	}
 	nb = (max > nb ? max : nb);
