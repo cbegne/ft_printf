@@ -28,6 +28,7 @@ static int	weird_precision_zero(t_print *param, uintmax_t arg)
 			(param->index == 'o' && param->sharp_prefix == 0))
 		{
 			param->sharp_prefix = -1;
+			param->count = param->width;
 			return (param->width);
 		}
 	}
