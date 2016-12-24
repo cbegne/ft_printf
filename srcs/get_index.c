@@ -23,7 +23,14 @@ void	get_index(const char **format, t_print *param)
 {
 	if (is_index(**format))
 	{
-		param->index = **format;
+		if (**format == 'O')
+			param->index = 'o';
+		else if (**format == 'D' || **format == 'i')
+			param->index = 'd';
+		else if (**format == 'U')
+			param->index = 'u';
+		else
+			param->index = **format;
 		(*format)++;
 	}
 }

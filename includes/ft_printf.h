@@ -52,9 +52,9 @@ void	get_index(const char **format, t_print *param);
 char	*convert_and_apply(va_list ap, t_print *param);
 uintmax_t	unsigned_convert(va_list ap, t_print *param);
 char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base);
-size_t		check_param_unsigned(t_print *param, size_t nb, uintmax_t arg);
+int		check_param_unsigned(t_print *param, int nb, uintmax_t arg);
 void	apply_no_minus_left(t_print *param, char *out, int size);
-void	apply_minus_left(t_print *param, char *out, size_t nb, size_t *new_nb);
+void	apply_minus_left(t_print *param, char *out, int nb, int *new_nb);
 
 void	ft_putchar(char c);
 int		ft_atoi(char *s);

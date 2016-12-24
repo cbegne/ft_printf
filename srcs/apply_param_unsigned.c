@@ -12,8 +12,7 @@
 
 #include "ft_printf.h"
 
-/** apply flags to tab : first characters
-*** out is filled with '0' when created
+/**
 *** Precision wins on width => number of ' ' = width - precision
 *** If #x, '0x' wins on width => must adjust number of spaces
 *** If '#o', must leave one charater for '0'
@@ -39,7 +38,7 @@ void	apply_no_minus_left(t_print *param, char *out, int size)
 	if (param->minus_left == 0)
 	{
 		i = 0;
-		space = param->width - param->precision;
+		space = (param->precision == -1 ? param->width : param->width - param->precision);
 	//	printf("space %d size %d\n", space, size);
 		if (param->sharp_prefix == 2 && size == 2)
 			space = 0; 
@@ -59,16 +58,25 @@ void	apply_no_minus_left(t_print *param, char *out, int size)
 	}
 }
 
-void	apply_minus_left(t_print *param, char *out, size_t nb, size_t *new_nb)
+void	apply_minus_left(t_print *param, char *out, int nb, int *new_nb)
 {
-	size_t i;
+	int 	space;
+	int	size;
+	int	i;
 
 	if (param->minus_left == 1)
 	{	
+	//	printf("new %d nb %d\n", *new_nb, nb);
 		i = apply_sharp_prefix(param, out, 0);
-		i = i + nb;	
-		while (out[i])
-			out[i++] = ' ';
-		*new_nb = nb + param->sharp_prefix;
+		size = *new_nb - nb - i;
+		space = (param->precision == -1 ? param->width - i : param->width - param->precision - i);
+		space = (space > size ? size : space);
+	//	printf("space %d\n", space);
+		while (space > 0)
+		{
+			out[--(*new_nb)] = ' ';
+			space--;
+		}
+		*new_nb = (space > 0 ? *new_nb - space : *new_nb);
 	}
 }

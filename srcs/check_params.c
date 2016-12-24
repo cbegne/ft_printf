@@ -35,9 +35,9 @@ static int	weird_precision_zero(t_print *param, uintmax_t arg)
 	return (-1);
 }
 
-size_t		check_param_unsigned(t_print *param, size_t nb, uintmax_t arg)
+int		check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 {
-	size_t		max;
+	int		max;
 	
 	if ((max = weird_precision_zero(param, arg)) != -1)
 		return (max);

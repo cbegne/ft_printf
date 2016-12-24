@@ -16,11 +16,11 @@ char	*convert_and_apply(va_list ap, t_print *param)
 {
 	char *out;
 
-//	if (param->index == 'i' || param->index == 'd' || param->index == 'D')
+//	if (param->index == 'd')
 		//apply (intmax_t)
-	if (param->index == 'u' || param->index == 'U')
+	if (param->index == 'u')
 		out = apply_itoa_base_unsigned(ap, param, 10);
-	else if (param->index == 'o' || param->index == 'O')	
+	else if (param->index == 'o')	
 		out = apply_itoa_base_unsigned(ap, param, 8);
 	else if (param->index == 'x' || param->index == 'X')
 		out = apply_itoa_base_unsigned(ap, param, 16);
