@@ -22,7 +22,7 @@ typedef struct		s_print
 	int				sharp_prefix;
 	int				zero_pad;
 	int				minus_left;
-	int				plus_sign;
+	int				sign;
 	int				blank;
 
 	int				length_h;
@@ -51,10 +51,15 @@ void	get_index(const char **format, t_print *param);
 
 char	*convert_and_apply(va_list ap, t_print *param);
 uintmax_t	unsigned_convert(va_list ap, t_print *param);
-char	*apply_itoa_base_unsigned(va_list ap, t_print *param, int base);
+intmax_t	signed_convert(va_list ap, t_print *param);
+char	*itoa_base_unsigned(va_list ap, t_print *param, int base);
+char	*itoa_base_signed(va_list ap, t_print *param, int base);
 int		check_param_unsigned(t_print *param, int nb, uintmax_t arg);
-void	apply_no_minus_left(t_print *param, char *out, int size);
-void	apply_minus_left(t_print *param, char *out, int nb, int *new_nb);
+int		check_param_signed(t_print *param, int nb, intmax_t arg);
+void	unsigned_no_minus_left(t_print *param, char *out, int size);
+void	unsigned_minus_left(t_print *param, char *out, int nb, int *new_nb);
+void	signed_no_minus_left(t_print *param, char *out, int size);
+void	signed_minus_left(t_print *param, char *out, int nb, int *new_nb);
 
 void	ft_putchar(char c);
 int		ft_atoi(char *s);
@@ -62,6 +67,7 @@ int		ft_isdigit(int n);
 void	ft_bzero(void *s, size_t n);
 char	*ft_strncpy(char *dst, char *src, size_t len);
 char	*ft_strcnew(size_t size, char c);
+char	*ft_strnew(size_t size);
 int		ft_abs(int n);
 void	ft_putstr(char *s);
 void		ft_strupper(char *s);

@@ -17,9 +17,9 @@ int		main(void)
 	int i;
 	int j;	
 
-	i = ft_printf("1me %u\n", -1);
-	j = printf("1it %u\n", -1);
-//	printf("%d %d\n", i, j);
+	i = ft_printf("1me |%+2%\n", -12);
+	j = printf("1it |%+2%\n", -12);
+	printf("%d %d\n", i, j);
 //	i = ft_printf("2me %#20.10x\n", 250000);
 //	j = printf("2it %#20.10x\n", 250000);
 //	printf("%d %d\n", i, j);

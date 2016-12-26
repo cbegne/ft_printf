@@ -28,10 +28,10 @@ void	get_flag(const char **format, t_print *param)
 		else if (**format == '-')
 			param->minus_left = 1;
 		else if (**format == '+')
-			param->plus_sign = 1;
+			param->sign = 1;
 		else if (**format == ' ')
 			param->blank = 1;
-		if (param->plus_sign == 1 && param->blank == 1)
+		if (param->sign == 1 && param->blank == 1)
 			param->blank = 0;
 		(*format)++;
 	}

@@ -12,6 +12,9 @@
 
 #include "ft_printf.h"
 
+/** Zero_pad annihilated if precision >= 0
+**/
+
 t_print		*parse(const char **format, va_list ap, t_print **param)
 {
 	*param = ft_memalloc(sizeof(t_print));
@@ -25,10 +28,7 @@ t_print		*parse(const char **format, va_list ap, t_print **param)
 		get_length(format, *param);
 		get_index(format, *param);
 	}
-	if ((*param)->index == 0 && **format == '%')
-	{
-		ft_putchar(**format);
-		(*param)->count++;
-	}
+	if ((*param)->precision != -1)
+		(*param)->zero_pad = 0;
 	return (*param);
 }

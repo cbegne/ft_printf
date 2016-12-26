@@ -10,9 +10,11 @@ SRC = ft_printf.c\
 	get_length.c\
 	get_index.c\
 	convert_and_apply.c\
-	apply_itoa_base_unsigned.c\
+	itoa_base_unsigned.c\
+	itoa_base_signed.c\
 	check_params.c\
 	apply_param_unsigned.c\
+	apply_param_signed.c
 
 OBJ = $(SRC:.c=.o)
 
