@@ -27,8 +27,8 @@ int		ft_printf(const char *format, ...)
 		{
 			format++;
 			param = parse(&format, ap, &param);
-			if ((out = convert_and_apply(ap, param)))
-				ft_putstr(out);
+			out = convert_and_apply(ap, param);
+			write(1, out, param->count);
 			nb = nb + param->count;
 			free(out);
 			free(param);

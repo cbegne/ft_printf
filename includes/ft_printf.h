@@ -16,6 +16,8 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <wchar.h>
+# include <unistd.h>
 
 typedef struct		s_print
 {
@@ -43,6 +45,8 @@ t_print	*parse(const char **format, va_list ap, t_print **param);
 int		is_flag(char c);
 int		is_length(char c);
 int		is_index(char c);
+int		is_char_index(char c);
+int		is_index(char c);
 void	get_flag(const char **format, t_print *param);
 void	get_width(const char **format, t_print *param, va_list ap);
 void	get_precision(const char **format, t_print *param, va_list ap);
@@ -60,12 +64,18 @@ void	unsigned_no_minus_left(t_print *param, char *out, int size);
 void	unsigned_minus_left(t_print *param, char *out, int nb, int *new_nb);
 void	signed_no_minus_left(t_print *param, char *out, int size);
 void	signed_minus_left(t_print *param, char *out, int nb, int *new_nb);
+char	*only_write(va_list ap, t_print *param);
+char	*string_write(va_list ap, t_print *param);
+int	check_param_string(t_print *param, char *arg);
+char	*string_no_minus_left(t_print *param, char *out, char *arg, int nb);
+char	*string_minus_left(t_print *param, char *out, char *arg);
 
 void	ft_putchar(char c);
 int		ft_atoi(char *s);
 int		ft_isdigit(int n);
 void	ft_bzero(void *s, size_t n);
 char	*ft_strncpy(char *dst, char *src, size_t len);
+char	*ft_strcpy(char *dst, char *src);
 char	*ft_strcnew(size_t size, char c);
 char	*ft_strnew(size_t size);
 int		ft_abs(int n);
@@ -73,5 +83,9 @@ void	ft_putstr(char *s);
 void		ft_strupper(char *s);
 int	ft_max(int nb1, int nb2);
 void	*ft_memalloc(size_t size);
+int	ft_isalpha(int c);
+size_t	ft_strlen(char *s);
+void	*ft_memcpy(void *dst, const void *src, size_t nb);
+char	*ft_strdup(const char *s);
 
 #endif

@@ -31,8 +31,8 @@ void	get_flag(const char **format, t_print *param)
 			param->sign = 1;
 		else if (**format == ' ')
 			param->blank = 1;
-		if (param->sign == 1 && param->blank == 1)
-			param->blank = 0;
+//		if (param->sign == 1 && param->blank == 1)
+//			param->blank = 0;
 		(*format)++;
 	}
 }

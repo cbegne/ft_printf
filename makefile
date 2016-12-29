@@ -14,7 +14,9 @@ SRC = ft_printf.c\
 	itoa_base_signed.c\
 	check_params.c\
 	apply_param_unsigned.c\
-	apply_param_signed.c
+	apply_param_signed.c\
+	char_string.c\
+	apply_param_string.c
 
 OBJ = $(SRC:.c=.o)
 

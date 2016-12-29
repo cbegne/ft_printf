@@ -4,6 +4,7 @@
 *** Precision wins on width => number of ' ' = width - precision
 *** If #x, '0x' wins on width => must adjust number of spaces
 *** If '#o', must leave one charater for '0'
+*** If blank and zero_pad, must have one space first
 **/
 
 void	signed_no_minus_left(t_print *param, char *out, int size)
@@ -13,8 +14,8 @@ void	signed_no_minus_left(t_print *param, char *out, int size)
 
 	i = 0;
 	space = (param->precision == -1 ? param->width : param->width - param->precision);
-	if (space <= 0 && param->blank == 1)
-		space = 1;
+	if ((param->zero_pad == 1 || space <= 0) && param->blank == 1)
+		out[i++] = ' ';
 	while (i < space && i < size && param->zero_pad == 0)
 		out[i++] = ' ';
 //	printf("space %d size %d\n", space, size);

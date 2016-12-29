@@ -15,13 +15,11 @@
 int		main(void)
 {
 	int i;
-	int j;	
+	int j;
+	int k = 0;
 
-	i = ft_printf("1me |%+2%\n", -12);
-	j = printf("1it |%+2%\n", -12);
+	i = ft_printf("me |%05.Z\n", k);
+	j = printf("it |%05.Z\n", k);
 	printf("%d %d\n", i, j);
-//	i = ft_printf("2me %#20.10x\n", 250000);
-//	j = printf("2it %#20.10x\n", 250000);
-//	printf("%d %d\n", i, j);
 	return (0);
 }

@@ -13,6 +13,7 @@
 #include "ft_printf.h"
 
 /** If precision = 0 and arg = 0, printf may write nothing (not even 0)
+*** param->precision = -2 if must not print 0
 **/
 
 static int	weird_precision_zero(t_print *param)
@@ -21,12 +22,15 @@ static int	weird_precision_zero(t_print *param)
 	{
 		if (param->index == 'x' || param->index == 'X' || \
 		((param->index == 'o' || param->index == 'O') && param->sharp_prefix == 0) || \
-		param->index == 'd' || param->index == 'D')
+		param->index == 'd' || param->index == 'D' || \
+		param->index == 'u' || param->index == 'U')
 		{
-			param->sharp_prefix = -1;
+			param->precision = -2;
 			param->count = param->width;
-			return (param->width);
+			return (param->count);
 		}
+		else if (param->index == 'p')
+			param->precision = -2;
 	}
 	return (-1);
 }
@@ -42,7 +46,7 @@ static int	weird_precision_zero(t_print *param)
 
 int		check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 {
-	int		max;
+	int	max;
 	
 	if (arg == 0 && (max = weird_precision_zero(param)) != -1)
 		return (max);
@@ -51,8 +55,10 @@ int		check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 	{
 		if ((param->index == 'o' || param->index == 'O' ) && arg != 0)
 			nb++;
-		else if ((param->index == 'x' || param->index == 'X') && arg != 0)
+		else if (param->index == 'p' || ((param->index == 'x' || param->index == 'X') && arg != 0))
 		{
+			if (param->index == 'p' && param->precision == -2)
+				nb = 0;
 			if (param->width - param->precision == 1)
 				max = max + 1;	
 			else if (param->width - param->precision < 2)
@@ -75,7 +81,7 @@ int		check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 
 int		check_param_signed(t_print *param, int nb, intmax_t arg)
 {
-	int		max;
+	int	max;
 		
 	if (arg == 0 && (max = weird_precision_zero(param)) != -1)
 		return (max);
@@ -89,7 +95,27 @@ int		check_param_signed(t_print *param, int nb, intmax_t arg)
 	if (param->blank == 1 && (param->width == 0 || param->width <= param->precision))
 		max++;
 //	printf("nb %d max %d\n", nb, max);
+//	printf("blank %d\n", param->blank);
 	nb = (max > nb ? max : nb);
 	param->count = nb;
 	return (nb);	
+}
+ 
+/** If precision, string shorted
+*** If no precision, width or size of string
+*** No impact of other flags
+**/
+
+int		check_param_string(t_print *param, char *arg)
+{
+	int	len;
+	int	nb;
+	
+	len = ft_strlen(arg);
+	if (param->precision != -1 && len > param->precision)
+		nb = ft_max(param->width, param->precision);
+	else
+		nb = ft_max(param->width, len);
+	param->count = nb;
+	return (nb);
 }

@@ -18,7 +18,7 @@ static int	apply_sharp_prefix(t_print *param, char *out, int i)
 	return (i);
 }
 
-void	apply_no_minus_left(t_print *param, char *out, int size)
+void	unsigned_no_minus_left(t_print *param, char *out, int size)
 {
 	int	i;
 	int	space;
@@ -43,7 +43,7 @@ void	apply_no_minus_left(t_print *param, char *out, int size)
 //	printf("out %s\n", out);
 }
 
-void	apply_minus_left(t_print *param, char *out, int nb, int *new_nb)
+void	unsigned_minus_left(t_print *param, char *out, int nb, int *new_nb)
 {
 	int 	space;
 	int	size;

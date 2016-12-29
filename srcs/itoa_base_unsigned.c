@@ -29,6 +29,7 @@ static int		count_size(uintmax_t value, int base)
 
 /** For unsigned conv -> u base 10 || o and O base 8 || x and X base 16 
 *** out is filled with '0' when created, used for precision
+*** sign = -1 if must not print 0 (precision O and value = 0)
 **/
 
 char	*itoa_base_unsigned(va_list ap, t_print *param, int base)
@@ -45,7 +46,7 @@ char	*itoa_base_unsigned(va_list ap, t_print *param, int base)
 	new_nb = check_param_unsigned(param, nb, arg);
 	if (!(out = ft_strcnew(new_nb, '0')))
 		return (NULL);
-	if (param->sharp_prefix == -1)
+	if (param->precision == -2)
 		nb = 0;
 	param->minus_left == 0 ? unsigned_no_minus_left(param, out, new_nb - nb) : unsigned_minus_left(param, out, nb, &new_nb);
 //	printf("nb %d new_nb %d\n", nb, new_nb);

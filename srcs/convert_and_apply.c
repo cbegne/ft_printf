@@ -12,58 +12,28 @@
 
 #include "ft_printf.h"
 
-/** With %, impact of width and minus_left
-**/
-
-static char	*only_write(t_print *param)
-{
-	char 	*out;
-	int 	i;
-	
-	i = (param->width > 0 ? param->width : 1);
-	if (!(out = ft_strnew(i)))
-		return (NULL);
-	param->count = i;
-	i = (param->minus_left == 0 ? 0 : i);
-//	printf("%d\n", i);
-	if (i > 0)
-	{
-		while (i > 0)
-			out[--i] = ' ';
-	}	
-	else
-	{
-		while (i < param->width - 1)
-			out[i++] = ' ';
-	}
-	out[i] = '%';
-	return (out);
-}
-	
 char	*convert_and_apply(va_list ap, t_print *param)
 {
 	char *out;
 
-	if (param->index == '%')
-		out = only_write(param);
-	else if (param->index == 'd' || param->index == 'D')
+	if (param->index == 'd' || param->index == 'D')
 		out = itoa_base_signed(ap, param, 10);
 	else if (param->index == 'u' || param->index == 'U')
 		out = itoa_base_unsigned(ap, param, 10);
 	else if (param->index == 'o' || param->index == 'O')	
 		out = itoa_base_unsigned(ap, param, 8);
-	else if (param->index == 'x' || param->index == 'X')
+	else if (param->index == 'x' || param->index == 'X' || param->index == 'p')
 		out = itoa_base_unsigned(ap, param, 16);
-//	else if (param->index == 's' || param->index == 'p')
+	else if (param->index == 's')
+		out = string_write(ap, param);
+//	else if (param->index == 'p')
 		// apply (char*)
 //	else if (param->index == 'S')
 		//apply (wchar_t*)
-//	else if (param->index == 'c')
-		//apply (char)
 //	else if (param->index == 'C')
 		// apply (wchar_t)
-//	else if (param->index == 0)
-		//
+	else if (param->index != 0)
+		out = only_write(ap, param);
 	else
 		out = NULL;
 	return (out);
@@ -84,7 +54,8 @@ static void	adjust_param(t_print *param, intmax_t arg)
 		param->sign = '+';
 }
 
-/** for i, d and D **/
+/** for i, d and D, get argument and apply correct length
+**/
 
 intmax_t	signed_convert(va_list ap, t_print *param)
 {
@@ -108,7 +79,8 @@ intmax_t	signed_convert(va_list ap, t_print *param)
 	return (arg);
 }
 
-/** for u, U, o, O, x and X **/
+/** for u, U, o, O, x and X, get argument and apply correct length
+**/
 
 uintmax_t	unsigned_convert(va_list ap, t_print *param)
 {
@@ -123,9 +95,9 @@ uintmax_t	unsigned_convert(va_list ap, t_print *param)
 	else if (param->length_l == 1 || param->index == 'U' || param->index == 'O')
 		arg = va_arg(ap, unsigned long int);
 	else if (param->length_h == 1)
-		arg = (short)va_arg(ap, unsigned int);
+		arg = (unsigned short)va_arg(ap, unsigned int);
 	else if (param->length_h == 2)
-		arg = (char)va_arg(ap, unsigned int);
+		arg = (unsigned char)va_arg(ap, unsigned int);
 	else
 		arg = va_arg(ap, unsigned int);
 	return (arg);
