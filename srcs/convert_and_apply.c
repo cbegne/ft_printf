@@ -88,7 +88,7 @@ uintmax_t	unsigned_convert(va_list ap, t_print *param)
 
 	if (param->length_j == 1)
 		arg = va_arg(ap, uintmax_t);
-	else if (param->length_z == 1)
+	else if (param->length_z == 1 || param->index == 'p')
 		arg = va_arg(ap, ssize_t);
 	else if (param->length_l == 2)
 		arg = va_arg(ap, unsigned long long int);
