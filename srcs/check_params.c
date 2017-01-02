@@ -13,7 +13,7 @@
 #include "ft_printf.h"
 
 /** If precision = 0 and arg = 0, printf may write nothing (not even 0)
-*** param->precision = -2 if must not print 0
+*** param->precision = -2 if must not print 0 nor flag_prefix
 **/
 
 static int	weird_precision_zero(t_print *param)
@@ -26,6 +26,7 @@ static int	weird_precision_zero(t_print *param)
 		param->index == 'u' || param->index == 'U')
 		{
 			param->precision = -2;
+			param->sharp_prefix = 0;
 			param->count = param->width;
 			return (param->count);
 		}
@@ -106,16 +107,37 @@ int		check_param_signed(t_print *param, int nb, intmax_t arg)
 *** No impact of other flags
 **/
 
-int		check_param_string(t_print *param, char *arg)
+int		check_param_string(t_print *param, int len)
 {
-	int	len;
 	int	nb;
-	
-	len = ft_strlen(arg);
+
 	if (param->precision != -1 && len > param->precision)
 		nb = ft_max(param->width, param->precision);
 	else
 		nb = ft_max(param->width, len);
+	param->count = nb;
+	return (nb);
+}
+
+/** If precision, string shorted. Tricky part: the size of one wchar_t varies from 1 to 4. 
+*** If a wchar_t is too big for the precision allowed, do not print wchar_t and stop at the previous one (if any).
+*** If no precision, width or size of string (same as normal string)
+**/
+
+int		check_param_wstring(t_print *param, int w_size, wchar_t *arg)
+{
+	int	nb;
+
+	if (param->precision != -1 && w_size > param->precision)
+	{
+		nb = 0;
+		while (nb <= param->precision && wchar_size(*arg) <= param->precision - nb)
+			nb = nb + wchar_size(*arg++);
+		if (param->width > nb)
+			nb = nb + (param->width - nb);;
+	}
+	else
+		nb = ft_max(param->width, w_size);
 	param->count = nb;
 	return (nb);
 }

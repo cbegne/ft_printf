@@ -24,14 +24,12 @@ char	*convert_and_apply(va_list ap, t_print *param)
 		out = itoa_base_unsigned(ap, param, 8);
 	else if (param->index == 'x' || param->index == 'X' || param->index == 'p')
 		out = itoa_base_unsigned(ap, param, 16);
+	else if (param->index == 'S' ||(param->index == 's' && param->length_l == 1))
+		out = wstring_write(ap, param);
 	else if (param->index == 's')
 		out = string_write(ap, param);
-//	else if (param->index == 'p')
-		// apply (char*)
-//	else if (param->index == 'S')
-		//apply (wchar_t*)
-//	else if (param->index == 'C')
-		// apply (wchar_t)
+	else if (param->index == 'C' || (param->index == 'c' && param->length_l == 1))
+		out = wchar_write(ap, param);
 	else if (param->index != 0)
 		out = only_write(ap, param);
 	else
@@ -79,7 +77,7 @@ intmax_t	signed_convert(va_list ap, t_print *param)
 	return (arg);
 }
 
-/** for u, U, o, O, x and X, get argument and apply correct length
+/** for p, u, U, o, O, x and X, get argument and apply correct length
 **/
 
 uintmax_t	unsigned_convert(va_list ap, t_print *param)

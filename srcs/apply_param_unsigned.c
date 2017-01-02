@@ -1,11 +1,5 @@
 #include "ft_printf.h"
 
-/**
-*** Precision wins on width => number of ' ' = width - precision
-*** If #x, '0x' wins on width => must adjust number of spaces
-*** If '#o', must leave one charater for '0'
-**/
-
 static int	apply_sharp_prefix(t_print *param, char *out, int i)
 {
 	if (param->sharp_prefix == 2)
@@ -18,13 +12,20 @@ static int	apply_sharp_prefix(t_print *param, char *out, int i)
 	return (i);
 }
 
+/** Precision wins on width => number of ' ' = width - precision
+*** If #x, '0x' wins on width => must adjust number of spaces
+*** If '#o', must leave one charater for '0'
+*** Precision = -2 when arg = 0 and precision = 0, and no value must be printed
+**/
+
 void	unsigned_no_minus_left(t_print *param, char *out, int size)
 {
 	int	i;
 	int	space;
 
 	i = 0;
-	space = (param->precision == -1 ? param->width : param->width - param->precision);	
+	space = (param->precision <= -1 ? param->width : param->width - param->precision);	
+//	printf("width %d prec %d\n", param->width, param->precision);
 //	printf("space %d size %d\n", space, size);
 	if (param->sharp_prefix == 2 && size == 2)
 		space = 0; 
@@ -52,7 +53,7 @@ void	unsigned_minus_left(t_print *param, char *out, int nb, int *new_nb)
 //	printf("new %d nb %d\n", *new_nb, nb);
 	i = apply_sharp_prefix(param, out, 0);
 	size = *new_nb - nb - i;
-	space = (param->precision == -1 ? param->width - i : param->width - param->precision - i);
+	space = (param->precision <= -1 ? param->width - i : param->width - param->precision - i);
 	space = (space > size ? size : space);
 //	printf("space %d\n", space);
 	while (space > 0)

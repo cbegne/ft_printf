@@ -12,10 +12,11 @@ SRC = ft_printf.c\
 	convert_and_apply.c\
 	create_unsigned.c\
 	create_signed.c\
+	create_char_string.c\
+	create_wchar_string.c\
 	check_params.c\
 	apply_param_unsigned.c\
 	apply_param_signed.c\
-	create_char_string.c\
 	apply_param_string.c
 
 OBJ = $(SRC:.c=.o)

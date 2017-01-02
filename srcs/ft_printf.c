@@ -35,7 +35,7 @@ int		ft_printf(const char *format, ...)
 		}
 		else
 		{
-			ft_putchar(*format);
+			write(1, format, 1);
 			nb++;
 			format++;
 		}

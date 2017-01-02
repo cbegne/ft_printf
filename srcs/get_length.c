@@ -31,6 +31,8 @@ void	get_length(const char **format, t_print *param)
 			if (param->length_l <= 2)
 				param->length_l++;
 		}
+		else if (**format == 'L')
+			param->length_l = 2;
 		else if (**format == 'j')
 			param->length_j = 1;
 		else if (**format == 'z')

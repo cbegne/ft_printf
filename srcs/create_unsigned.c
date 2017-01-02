@@ -48,6 +48,7 @@ char	*itoa_base_unsigned(va_list ap, t_print *param, int base)
 		return (NULL);
 	if (param->precision == -2)
 		nb = 0;
+//	printf("prec %d\n", param->precision);
 	param->minus_left == 0 ? unsigned_no_minus_left(param, out, new_nb - nb) : unsigned_minus_left(param, out, nb, &new_nb);
 //	printf("nb %d new_nb %d\n", nb, new_nb);
 	while (nb--)
