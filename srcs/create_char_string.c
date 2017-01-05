@@ -1,18 +1,8 @@
 #include "ft_printf.h"
 
-/** if minus_left, no blank
-
-
-static	void	adjust_param(t_print *param)
-{
-	if (param->minus_left == 1)
-		param->blank = 0;
-}
-**/
-/** for %, c and unofficial index (ie any other letter)
-*** width, minus_left and zero_pad have an impact
-*** flag '0' is ignored when flag '-' is present
-*** ==> gérer lc avec C <==
+/** For %, c and unofficial index (ie any other letter)
+*** Width, minus_left and zero_pad have an impact
+*** Flag '0' is ignored when flag '-' is present
 **/
 
 char	*only_write(va_list ap, t_print *param)
@@ -35,10 +25,10 @@ char	*only_write(va_list ap, t_print *param)
 	return (out);
 }
 
-/** for s index
-*** if arg = 0, write '(null)'. Can be cut with width or precision (eg '00000(nu')
-*** width, precision, zero_pad and minus_left
-*** flag '0' is ignored when flag '-' is present
+/** For index 's'
+*** If arg = 0, write '(null)'. Can be cut with width or precision (eg '00000(nu')
+*** Width, precision, zero_pad and minus_left
+*** Flag '0' is ignored when flag '-' is present
 **/
 
 char	*string_write(va_list ap, t_print *param)

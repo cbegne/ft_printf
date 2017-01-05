@@ -27,9 +27,10 @@ static int		count_size(uintmax_t value, int base)
 	return (nb);
 }
 
-/** For unsigned conv -> u base 10 || o and O base 8 || x and X base 16 
-*** out is filled with '0' when created, used for precision
-*** sign = -1 if must not print 0 (precision O and value = 0)
+/** For unsigned conv -> u base 10 || o and O base 8 || x and X base 16
+*** Same logic as signed conv (see for more info)
+*** 'Out' is filled with '0' when created, used for precision
+*** Precision = -2 if must not print 0 (precision = 0 and arg = 0)
 **/
 
 char	*itoa_base_unsigned(va_list ap, t_print *param, int base)

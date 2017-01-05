@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+/** After parsing, convert and apply according to index
+*** S works as ls, C works as lc
+*** Next : see create_signed.c, create_unsigned.c, create_char_string.c or
+*** create_wchar_string.c according to index
+**/
+
 char	*convert_and_apply(va_list ap, t_print *param)
 {
 	char *out;
@@ -24,7 +30,7 @@ char	*convert_and_apply(va_list ap, t_print *param)
 		out = itoa_base_unsigned(ap, param, 8);
 	else if (param->index == 'x' || param->index == 'X' || param->index == 'p')
 		out = itoa_base_unsigned(ap, param, 16);
-	else if (param->index == 'S' ||(param->index == 's' && param->length_l == 1))
+	else if (param->index == 'S' || (param->index == 's' && param->length_l == 1))
 		out = wstring_write(ap, param);
 	else if (param->index == 's')
 		out = string_write(ap, param);
@@ -37,8 +43,8 @@ char	*convert_and_apply(va_list ap, t_print *param)
 	return (out);
 }
 
-/** param->blank is effective only on positive values, already impacted on get_flag
-*** param->sign = '+' or '-' directly
+/** Sign = '+' if arg is positive or '-' if negative, directly
+*** No blank if value is negative
 **/
 
 static void	adjust_param(t_print *param, intmax_t arg)
@@ -52,7 +58,8 @@ static void	adjust_param(t_print *param, intmax_t arg)
 		param->sign = '+';
 }
 
-/** for i, d and D, get argument and apply correct length
+/** for i, d and D, get argument and apply length
+*** Put in max length, ie intmax_t
 **/
 
 intmax_t	signed_convert(va_list ap, t_print *param)
@@ -77,7 +84,8 @@ intmax_t	signed_convert(va_list ap, t_print *param)
 	return (arg);
 }
 
-/** for p, u, U, o, O, x and X, get argument and apply correct length
+/** for p, u, U, o, O, x and X, get argument and apply length
+*** Put in max length, ie uintmax_t
 **/
 
 uintmax_t	unsigned_convert(va_list ap, t_print *param)

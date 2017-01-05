@@ -80,7 +80,6 @@ char	*wstring_minus_left(t_print *param, char *out, wchar_t *arg);
 
 int		ft_atoi(char *s);
 int		ft_isdigit(int n);
-void	ft_bzero(void *s, size_t n);
 char	*ft_strncpy(char *dst, char *src, size_t len);
 char	*ft_strcpy(char *dst, char *src);
 char	*ft_strcnew(size_t size, char c);

@@ -12,6 +12,11 @@
 
 #include "ft_printf.h"
 
+/** Width = minimum number of digits / characters to print (padded with ' ')
+*** Can be modified with zero_pad, to pad with '0'
+*** When '*', size to be given in first va_arg (cannot have more than one '*')
+**/
+
 void	get_width(const char **format, t_print *param, va_list ap)
 {
 	if (ft_isdigit(**format))

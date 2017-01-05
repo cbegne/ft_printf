@@ -13,7 +13,8 @@
 #include "ft_printf.h"
 
 /** If precision = 0 and arg = 0, printf may write nothing (not even 0)
-*** param->precision = -2 if must not print 0 nor flag_prefix
+*** Param->precision = -2 if must not print 0 nor flag_prefix
+*** Must always print sharp_prefix with index 'p'
 **/
 
 static int	weird_precision_zero(t_print *param)
@@ -21,8 +22,8 @@ static int	weird_precision_zero(t_print *param)
 	if (param->precision == 0)
 	{
 		if (param->index == 'x' || param->index == 'X' || \
-		((param->index == 'o' || param->index == 'O') && param->sharp_prefix == 0) || \
-		param->index == 'd' || param->index == 'D' || \
+		((param->index == 'o' || param->index == 'O') && \
+param->sharp_prefix == 0) || param->index == 'd' || param->index == 'D' || \
 		param->index == 'u' || param->index == 'U')
 		{
 			param->precision = -2;
@@ -36,8 +37,8 @@ static int	weird_precision_zero(t_print *param)
 	return (-1);
 }
 
-/** nb is the minimum size, no matter the width or precision.
-*** max is the maximum size, according to width or precision.
+/** Nb is the minimum size, no matter the width or precision.
+*** Max is the maximum size, according to width or precision.
 *** Must add sharp prefix to the min size.
 *** If #x and width - precision >=2, enough space for '0x' on width
 *** If #x and width - precision < 2, not enough space for '0x' 
@@ -56,7 +57,8 @@ int		check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 	{
 		if ((param->index == 'o' || param->index == 'O' ) && arg != 0)
 			nb++;
-		else if (param->index == 'p' || ((param->index == 'x' || param->index == 'X') && arg != 0))
+		else if (param->index == 'p' || ((param->index == 'x' \
+|| param->index == 'X') && arg != 0))
 		{
 			if (param->index == 'p' && param->precision == -2)
 				nb = 0;
@@ -120,7 +122,8 @@ int		check_param_string(t_print *param, int len)
 }
 
 /** If precision, string shorted. Tricky part: the size of one wchar_t varies from 1 to 4. 
-*** If a wchar_t is too big for the precision allowed, do not print wchar_t and stop at the previous one (if any).
+*** If a wchar_t is too big for the precision allowed, do not print wchar_t and 
+*** stop at the previous one (if any).
 *** If no precision, width or size of string (same as normal string)
 **/
 

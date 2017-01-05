@@ -78,6 +78,7 @@ char	*wstring_write(va_list ap, t_print *param)
 	int	nb;
 
 	arg = va_arg(ap, wchar_t*);
+	nb = 0;
 	if (arg == NULL)
 		arg = L"(null)";
 	w_size = wstring_size(arg);

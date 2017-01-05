@@ -2,8 +2,6 @@
 
 /**
 *** Precision wins on width => number of ' ' = width - precision
-*** If #x, '0x' wins on width => must adjust number of spaces
-*** If '#o', must leave one charater for '0'
 *** If blank and zero_pad, must have one space first
 **/
 
@@ -26,7 +24,10 @@ void	signed_no_minus_left(t_print *param, char *out, int size)
 //	printf("out %s\n", out);
 }
 
-/** Sign or blank ' ' first, width ' ' at the end
+/** Size = number of char to print that is not arg
+*** Space = number of space to be printed (width, width - precision or size)
+*** Sign or blank first, width at the end
+*** Must change new_nb to copy arg in itoa_base_signed.c
 **/
 
 void	signed_minus_left(t_print *param, char *out, int nb, int *new_nb)
