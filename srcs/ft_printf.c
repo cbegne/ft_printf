@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 16:31:07 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/10 17:12:36 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/10 18:10:02 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,45 @@ static int	printf_arg(const char **format, va_list ap, char **s, int len_s)
 	return (len_out);
 }
 
-int			ft_printf(const char *format, ...)
-{
-	va_list ap;
+static int	start_printf(va_list ap, const char **format, char *s)
+{	
 	int		nb;
-	char	*s;
 	int		count;
+	int		i;
 
-	va_start(ap, format);
-	if (!(s = ft_strdup("")))
-		return (-1);
 	nb = 0;
-	while (*format)
+	i = 0;
+	count = 0;
+	while (**format)
 	{
-		if (*format == '%')
+		if (**format == '%')
 		{
-			format++;
-			if ((count = printf_arg(&format, ap, &s, nb)) != -1)
+			(*format)++;
+			if ((count = printf_arg(format, ap, &s, nb)) != -1)
 				nb = nb + count;
 			else
 				break ;
 		}
 		else
 		{
-			nb = nb + printf_no_arg(&format, &s, nb);
+			i =  printf_no_arg(format, &s, nb);
+			nb = nb + i;
 		}
 	}
-	write(1, s, nb);
+	count != -1 ? write(1, s, nb) : write(1, s, nb - i);
 	free(s);
-	va_end(ap);
 	return (count == -1 ? -1 : nb);
+}
+
+int			ft_printf(const char *format, ...)
+{
+	va_list ap;
+	int		nb;
+	char	*s;
+
+	va_start(ap, format);
+	s = ft_strdup("");
+	nb = start_printf(ap, &format, s);
+	va_end(ap);
+	return (nb);
 }
