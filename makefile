@@ -1,19 +1,30 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cbegne <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/01/09 20:04:39 by cbegne            #+#    #+#              #
+#    Updated: 2017/01/10 12:11:21 by cbegne           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = libftprintf.a
 
 FLAG = -Wall -Wextra -Werror
 
 SRC = ft_printf.c\
 	parse.c\
-	get_flag.c\
-	get_width.c\
-	get_precision.c\
-	get_length.c\
+	get_flag_length.c\
+	get_width_precision.c\
 	get_index.c\
 	convert_and_apply.c\
 	create_unsigned.c\
 	create_signed.c\
 	create_char_string.c\
 	create_wchar_string.c\
+	wchar_create.c\
 	check_params.c\
 	apply_param_unsigned.c\
 	apply_param_signed.c\

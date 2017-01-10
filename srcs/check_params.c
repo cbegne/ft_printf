@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/19 11:48:00 by cbegne            #+#    #+#             */
-/*   Updated: 2016/12/19 17:41:29 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/10 13:53:08 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,30 @@ param->sharp_prefix == 0) || param->index == 'd' || param->index == 'D' || \
 *** Max is the maximum size, according to width or precision.
 *** Must add sharp prefix to the min size.
 *** If #x and width - precision >=2, enough space for '0x' on width
-*** If #x and width - precision < 2, not enough space for '0x' 
+*** If #x and width - precision < 2, not enough space for '0x'
 *** 	=> must add enough space
 *** No impact of other flags
 **/
 
-int		check_param_unsigned(t_print *param, int nb, uintmax_t arg)
+int			check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 {
-	int	max;
-	
+	int		max;
+
 	if (arg == 0 && (max = weird_precision_zero(param)) != -1)
 		return (max);
 	max = ft_max(param->width, param->precision);
 	if (param->sharp_prefix == 1)
 	{
-		if ((param->index == 'o' || param->index == 'O' ) && arg != 0)
+		if ((param->index == 'o' || param->index == 'O') && arg != 0)
 			nb++;
-		else if (param->index == 'p' || ((param->index == 'x' \
-|| param->index == 'X') && arg != 0))
+		else if (param->index == 'p' || \
+				((param->index == 'x' || param->index == 'X') && arg != 0))
 		{
 			if (param->index == 'p' && param->precision == -2)
 				nb = 0;
 			if (param->width - param->precision == 1)
-				max = max + 1;	
-			else if (param->width - param->precision < 2)
+				max = max + 1;
+			else if (param->width - param->precision < 1)
 				max = max + 2;
 			nb = nb + 2;
 			param->sharp_prefix = 2;
@@ -72,46 +72,44 @@ int		check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 		else
 			param->sharp_prefix = 0;
 	}
-	nb = (max > nb ? max : nb);
-	param->count = nb;
-	return (nb);
+	return (max > nb ? max : nb);
 }
 
 /** Must add sign and/or blank ' ' no matter the width or precision
 *** No addition if width is > 0 or bigger than precision
 *** No impact of other flags
-**/ 
+**/
 
-int		check_param_signed(t_print *param, int nb, intmax_t arg)
+int			check_param_signed(t_print *param, int nb, intmax_t arg)
 {
-	int	max;
-		
+	int		max;
+
 	if (arg == 0 && (max = weird_precision_zero(param)) != -1)
 		return (max);
 	max = ft_max(param->width, param->precision);
 	if (param->sign != 0)
 		nb++;
-	if (param->sign != 0 && (param->width == 0 || param->width <= param->precision))
+	if (param->sign != 0 && (param->width == 0 \
+				|| param->width <= param->precision))
 		max++;
 	if (param->blank == 1)
 		nb++;
-	if (param->blank == 1 && (param->width == 0 || param->width <= param->precision))
+	if (param->blank == 1 && (param->width == 0 \
+				|| param->width <= param->precision))
 		max++;
-//	printf("nb %d max %d\n", nb, max);
-//	printf("blank %d\n", param->blank);
 	nb = (max > nb ? max : nb);
 	param->count = nb;
-	return (nb);	
+	return (nb);
 }
- 
+
 /** If precision, string shorted
 *** If no precision, width or size of string
 *** No impact of other flags
 **/
 
-int		check_param_string(t_print *param, int len)
+int			check_param_string(t_print *param, int len)
 {
-	int	nb;
+	int		nb;
 
 	if (param->precision != -1 && len > param->precision)
 		nb = ft_max(param->width, param->precision);
@@ -121,23 +119,25 @@ int		check_param_string(t_print *param, int len)
 	return (nb);
 }
 
-/** If precision, string shorted. Tricky part: the size of one wchar_t varies from 1 to 4. 
-*** If a wchar_t is too big for the precision allowed, do not print wchar_t and 
-*** stop at the previous one (if any).
+/** If precision, string shorted. Tricky part: the size of one wchar_t
+*** varies from 1 to 4.
+*** If a wchar_t is too big for the precision allowed, do not print
+*** wchar_t and stop at the previous one (if any).
 *** If no precision, width or size of string (same as normal string)
 **/
 
-int		check_param_wstring(t_print *param, int w_size, wchar_t *arg)
+int			check_param_wstring(t_print *param, int w_size, wchar_t *arg)
 {
-	int	nb;
+	int		nb;
 
 	if (param->precision != -1 && w_size > param->precision)
 	{
 		nb = 0;
-		while (nb <= param->precision && wchar_size(*arg) <= param->precision - nb)
+		while (nb <= param->precision \
+				&& wchar_size(*arg) <= param->precision - nb)
 			nb = nb + wchar_size(*arg++);
 		if (param->width > nb)
-			nb = nb + (param->width - nb);;
+			nb = nb + (param->width - nb);
 	}
 	else
 		nb = ft_max(param->width, w_size);

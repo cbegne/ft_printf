@@ -6,11 +6,36 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 19:07:49 by cbegne            #+#    #+#             */
-/*   Updated: 2016/12/19 18:48:43 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/09 15:47:59 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/** for p, u, U, o, O, x and X, get argument and apply length
+*** Put in max length, ie uintmax_t
+**/
+
+static uintmax_t		unsigned_convert(va_list ap, t_print *param)
+{
+	uintmax_t	arg;
+
+	if (param->length_j == 1)
+		arg = va_arg(ap, uintmax_t);
+	else if (param->length_l == 2)
+		arg = va_arg(ap, unsigned long long int);
+	else if (param->length_z == 1 || param->index == 'p')
+		arg = va_arg(ap, ssize_t);
+	else if (param->length_l == 1 || param->index == 'U' || param->index == 'O')
+		arg = va_arg(ap, unsigned long int);
+	else if (param->length_h == 1)
+		arg = (unsigned short)va_arg(ap, unsigned int);
+	else if (param->length_h == 2)
+		arg = (unsigned char)va_arg(ap, unsigned int);
+	else
+		arg = va_arg(ap, unsigned int);
+	return (arg);
+}
 
 static int		count_size(uintmax_t value, int base)
 {
@@ -33,29 +58,28 @@ static int		count_size(uintmax_t value, int base)
 *** Precision = -2 if must not print 0 (precision = 0 and arg = 0)
 **/
 
-char	*itoa_base_unsigned(va_list ap, t_print *param, int base)
+char			*itoa_base_unsigned(va_list ap, t_print *param, int base)
 {
 	char		*tab;
 	char		*out;
-	int		nb;
-	int		new_nb;
+	int			nb;
+	int			new_nb;
 	uintmax_t	arg;
 
 	tab = "0123456789abcdef";
 	arg = unsigned_convert(ap, param);
 	nb = count_size(arg, base);
 	new_nb = check_param_unsigned(param, nb, arg);
+	param->count = new_nb;
 	if (!(out = ft_strcnew(new_nb, '0')))
 		return (NULL);
 	if (param->precision == -2)
 		nb = 0;
-//	printf("prec %d\n", param->precision);
-	param->minus_left == 0 ? unsigned_no_minus_left(param, out, new_nb - nb) : unsigned_minus_left(param, out, nb, &new_nb);
-//	printf("nb %d new_nb %d\n", nb, new_nb);
+	param->minus_left == 0 ? unsigned_no_minus(param, out, new_nb - nb) \
+	: unsigned_minus(param, out, nb, &new_nb);
 	while (nb--)
 	{
 		out[--new_nb] = tab[ft_abs(arg % base)];
-//		printf("out[%d] = %c\n", new_nb, out[new_nb]);
 		arg = arg / base;
 	}
 	if (param->index == 'X')
