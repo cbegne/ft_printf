@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 15:31:45 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/10 16:17:13 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 12:54:29 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <locale.h>
 # include <wchar.h>
 # include <unistd.h>
 # include "../libft/libft.h"
@@ -39,7 +40,6 @@ typedef struct	s_print
 }				t_print;
 
 int				ft_printf(const char *format, ...);
-
 void			parse(const char **format, va_list ap, t_print *param);
 int				is_flag(char c);
 int				is_length(char c);
@@ -51,7 +51,6 @@ void			get_width(const char **format, t_print *param, va_list ap);
 void			get_precision(const char **format, t_print *param, va_list ap);
 void			get_length(const char **format, t_print *param);
 void			get_index(const char **format, t_print *param);
-
 char			*convert_and_apply(va_list ap, t_print *param);
 char			*itoa_base_unsigned(va_list ap, t_print *param, int base);
 char			*itoa_base_signed(va_list ap, t_print *param, int base);
@@ -71,7 +70,8 @@ int				check_param_wstring(t_print *param, int w_size, wchar_t *arg);
 int				wchar_size(wint_t c);
 int				wstring_size(wchar_t *arg);
 int				wchar_create(wint_t c, char *out, int i);
-char			*wstring_no_minus(t_print *param, char *out, wchar_t *arg, int nb);
+char			*wstring_no_minus(t_print *param, char *out,
+				wchar_t *arg, int nb);
 char			*wstring_minus(t_print *param, char *out, wchar_t *arg);
 
 #endif

@@ -6,16 +6,11 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/19 11:48:00 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/10 13:53:08 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 11:43:23 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/** If precision = 0 and arg = 0, printf may write nothing (not even 0)
-*** Param->precision = -2 if must not print 0 nor flag_prefix
-*** Must always print sharp_prefix with index 'p'
-**/
 
 static int	weird_precision_zero(t_print *param)
 {
@@ -36,15 +31,6 @@ param->sharp_prefix == 0) || param->index == 'd' || param->index == 'D' || \
 	}
 	return (-1);
 }
-
-/** Nb is the minimum size, no matter the width or precision.
-*** Max is the maximum size, according to width or precision.
-*** Must add sharp prefix to the min size.
-*** If #x and width - precision >=2, enough space for '0x' on width
-*** If #x and width - precision < 2, not enough space for '0x'
-*** 	=> must add enough space
-*** No impact of other flags
-**/
 
 int			check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 {
@@ -75,11 +61,6 @@ int			check_param_unsigned(t_print *param, int nb, uintmax_t arg)
 	return (max > nb ? max : nb);
 }
 
-/** Must add sign and/or blank ' ' no matter the width or precision
-*** No addition if width is > 0 or bigger than precision
-*** No impact of other flags
-**/
-
 int			check_param_signed(t_print *param, int nb, intmax_t arg)
 {
 	int		max;
@@ -102,11 +83,6 @@ int			check_param_signed(t_print *param, int nb, intmax_t arg)
 	return (nb);
 }
 
-/** If precision, string shorted
-*** If no precision, width or size of string
-*** No impact of other flags
-**/
-
 int			check_param_string(t_print *param, int len)
 {
 	int		nb;
@@ -118,13 +94,6 @@ int			check_param_string(t_print *param, int len)
 	param->count = nb;
 	return (nb);
 }
-
-/** If precision, string shorted. Tricky part: the size of one wchar_t
-*** varies from 1 to 4.
-*** If a wchar_t is too big for the precision allowed, do not print
-*** wchar_t and stop at the previous one (if any).
-*** If no precision, width or size of string (same as normal string)
-**/
 
 int			check_param_wstring(t_print *param, int w_size, wchar_t *arg)
 {

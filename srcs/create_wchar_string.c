@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 15:25:36 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/10 18:28:02 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 12:46:51 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,44 @@ int			wstring_size(wchar_t *arg)
 {
 	int		i;
 	int		w_size;
+	int		w_char;
 
 	i = 0;
 	w_size = 0;
+	w_char = 0;
 	while (arg[i])
-		w_size = w_size + wchar_size(arg[i++]);
+	{
+		w_char = wchar_size(arg[i++]);
+		if (w_char == 0)
+			return (-1);
+		w_size = w_size + w_char;
+	}
 	return (w_size);
+}
+
+int			wchar_create(wint_t c, char *out, int i)
+{
+	if (c <= 0x7F)
+		out[i++] = c;
+	else if (c <= 0x7FF)
+	{
+		out[i++] = ((c >> 6) | 0xC0);
+		out[i++] = ((c & 0x3F) | 0x80);
+	}
+	else if (c <= 0xFFFF)
+	{
+		out[i++] = ((c >> 12) | 0xE0);
+		out[i++] = (((c >> 6) & 0x3F) | 0x80);
+		out[i++] = ((c & 0x3F) | 0x80);
+	}
+	else if (c <= 0x10FFFF)
+	{
+		out[i++] = ((c >> 18) | 0xF0);
+		out[i++] = (((c >> 12) & 0x3F) | 0x80);
+		out[i++] = (((c >> 6) & 0x3F) | 0x80);
+		out[i++] = ((c & 0x3F) | 0x80);
+	}
+	return (i);
 }
 
 char		*wchar_write(va_list ap, t_print *param)
@@ -77,6 +109,6 @@ char		*wstring_write(va_list ap, t_print *param)
 					: ft_strcnew(nb, ' '))))
 		return (NULL);
 	out = param->minus_left == 0 ? wstring_no_minus(param, out, arg, nb) \
-		  : wstring_minus(param, out, arg);
+		: wstring_minus(param, out, arg);
 	return (out);
 }

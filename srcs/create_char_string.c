@@ -6,16 +6,11 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 14:02:53 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/09 17:41:24 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 11:43:49 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/** For %, c and unofficial index (ie any other letter)
-*** Width, minus_left and zero_pad have an impact
-*** Flag '0' is ignored when flag '-' is present
-**/
 
 char	*only_write(va_list ap, t_print *param)
 {
@@ -35,13 +30,6 @@ char	*only_write(va_list ap, t_print *param)
 	out[i] = (char)arg;
 	return (out);
 }
-
-/** For index 's'
-*** If arg = 0, write '(null)'. Can be cut with width or precision
-*** (eg '00000(nu')
-*** Width, precision, zero_pad and minus_left
-*** Flag '0' is ignored when flag '-' is present
-**/
 
 char	*string_write(va_list ap, t_print *param)
 {

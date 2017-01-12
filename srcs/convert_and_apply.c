@@ -6,17 +6,11 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 18:46:13 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/10 17:26:10 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 13:02:21 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/** After parsing, convert and apply according to index
-*** S works as ls, C works as lc
-*** Next : see create_signed.c, create_unsigned.c, create_char_string.c or
-*** create_wchar_string.c according to index
-**/
 
 char			*convert_and_apply(va_list ap, t_print *param)
 {
@@ -38,6 +32,8 @@ char			*convert_and_apply(va_list ap, t_print *param)
 	else if (param->index == 'C' || (param->index == 'c' \
 				&& param->length_l == 1))
 		out = wchar_write(ap, param);
+	else if (param->index == 'b')
+		out = itoa_base_unsigned(ap, param, 2);
 	else if (param->index != 0)
 		out = only_write(ap, param);
 	else

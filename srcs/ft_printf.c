@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 16:31:07 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/10 18:10:02 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 17:46:06 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ static int	printf_no_arg(const char **format, char **s, int len_s)
 	return (i);
 }
 
-/** Starting printf. Variable number of arguments '...' => use of va_list
-*** Printf returns number of char written (param->count)
-*** Every argument starts with a %, else write
-*** Const char, so send &format
-*** Steps : parsing data (flags, length, width, precision), converting va_arg
-*** and applying
-**/
-
 static int	printf_arg(const char **format, va_list ap, char **s, int len_s)
 {
 	t_print param;
@@ -57,13 +49,11 @@ static int	printf_arg(const char **format, va_list ap, char **s, int len_s)
 	return (len_out);
 }
 
-static int	start_printf(va_list ap, const char **format, char *s)
-{	
-	int		nb;
+static int	start_printf(va_list ap, const char **format, char *s, int nb)
+{
 	int		count;
 	int		i;
 
-	nb = 0;
 	i = 0;
 	count = 0;
 	while (**format)
@@ -78,7 +68,7 @@ static int	start_printf(va_list ap, const char **format, char *s)
 		}
 		else
 		{
-			i =  printf_no_arg(format, &s, nb);
+			i = printf_no_arg(format, &s, nb);
 			nb = nb + i;
 		}
 	}
@@ -94,8 +84,9 @@ int			ft_printf(const char *format, ...)
 	char	*s;
 
 	va_start(ap, format);
+	nb = 0;
 	s = ft_strdup("");
-	nb = start_printf(ap, &format, s);
+	nb = start_printf(ap, &format, s, nb);
 	va_end(ap);
 	return (nb);
 }

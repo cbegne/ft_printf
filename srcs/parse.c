@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 17:05:39 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/09 19:38:45 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 13:19:39 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ static int	is_legit(const char *format)
 	return (0);
 }
 
-/** No zero_pad '0' if precision >= 0, except for char_index
-*** No zero_pad '0' if minus_left '-'
-*** No blank ' ' if sign '+'
-*** Always sharp_prefix '0x' if index 'p'
-**/
-
 static void	adjust_param(t_print *param)
 {
 	if (param->precision != -1 && is_char_index(param->index) == 0)
@@ -39,11 +33,7 @@ static void	adjust_param(t_print *param)
 		param->sharp_prefix = 1;
 }
 
-/** Struct param to keep all parsing data. Everything = 0, except precision = -1
-*** Save info until index is found : sSpdDioOuUxXcC or % or any letter
-**/
-
-void	parse(const char **format, va_list ap, t_print *param)
+void		parse(const char **format, va_list ap, t_print *param)
 {
 	ft_bzero(param, sizeof(t_print));
 	(param)->precision = -1;

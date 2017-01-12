@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/14 18:40:18 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/09 15:58:29 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 11:40:50 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@ int		is_char_index(char c)
 	return (0);
 }
 
-/** s = string of chars, S = unicode string of chars, p = printable chars of a
-*** void*, d or i = signed int, D = signed long int (same as ld), o = octal,
-*** O = long octal (same as lo), u = unsigned int, U = unsigned long int
-*** (same as lu), x = hexadecimal with lower letters,
-*** X = hexadecimal with upper letters, c = char, C = unicode char,
-*** % = print one %
-**/
-
 int		is_index(char c)
 {
 	if (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' \
@@ -37,11 +29,6 @@ int		is_index(char c)
 		return (1);
 	return (0);
 }
-
-/** Any letter other than index above works as index c, with the letter being
-*** the char to print
-*** Same behaviour of index 'i' and 'd'
-**/
 
 void	get_index(const char **format, t_print *param)
 {

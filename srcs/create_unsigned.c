@@ -6,17 +6,13 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 19:07:49 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/09 15:47:59 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 13:02:24 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/** for p, u, U, o, O, x and X, get argument and apply length
-*** Put in max length, ie uintmax_t
-**/
-
-static uintmax_t		unsigned_convert(va_list ap, t_print *param)
+static uintmax_t	unsigned_convert(va_list ap, t_print *param)
 {
 	uintmax_t	arg;
 
@@ -37,7 +33,7 @@ static uintmax_t		unsigned_convert(va_list ap, t_print *param)
 	return (arg);
 }
 
-static int		count_size(uintmax_t value, int base)
+static int			count_size(uintmax_t value, int base)
 {
 	int	nb;
 
@@ -52,13 +48,7 @@ static int		count_size(uintmax_t value, int base)
 	return (nb);
 }
 
-/** For unsigned conv -> u base 10 || o and O base 8 || x and X base 16
-*** Same logic as signed conv (see for more info)
-*** 'Out' is filled with '0' when created, used for precision
-*** Precision = -2 if must not print 0 (precision = 0 and arg = 0)
-**/
-
-char			*itoa_base_unsigned(va_list ap, t_print *param, int base)
+char				*itoa_base_unsigned(va_list ap, t_print *param, int base)
 {
 	char		*tab;
 	char		*out;

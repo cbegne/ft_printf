@@ -6,7 +6,7 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 13:35:54 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/09 15:06:50 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 11:42:48 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ static int	apply_sharp_prefix(t_print *param, char *out, int i)
 		out[i++] = '0';
 	return (i);
 }
-
-/** Precision wins on width => number of ' ' = width - precision
-*** If #x, '0x' wins on width => must adjust number of spaces
-*** If '#o', must leave one charater for '0'
-*** Precision = -2 when arg = 0 and precision = 0, and no value must be printed
-**/
 
 void		unsigned_no_minus(t_print *param, char *out, int size)
 {

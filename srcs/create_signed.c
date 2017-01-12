@@ -6,17 +6,13 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 15:20:57 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/09 15:54:43 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 11:46:34 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/** Sign = '+' if arg is positive or '-' if negative, directly
-*** No blank if value is negative
-**/
-
-static void		adjust_param(t_print *param, intmax_t arg)
+static void			adjust_param(t_print *param, intmax_t arg)
 {
 	if (arg < 0)
 	{
@@ -26,10 +22,6 @@ static void		adjust_param(t_print *param, intmax_t arg)
 	else if (param->sign == 1)
 		param->sign = '+';
 }
-
-/** for i, d and D, get argument and apply length
-*** Put in max length, ie intmax_t
-**/
 
 static intmax_t		signed_convert(va_list ap, t_print *param)
 {
@@ -53,7 +45,7 @@ static intmax_t		signed_convert(va_list ap, t_print *param)
 	return (arg);
 }
 
-static int		count_size(intmax_t value, int base)
+static int			count_size(intmax_t value, int base)
 {
 	int	nb;
 
@@ -68,17 +60,7 @@ static int		count_size(intmax_t value, int base)
 	return (nb);
 }
 
-/** For signed conv -> base 10
-*** Steps : get argument ('arg'), get size according to arg and check_params.c
-*** (width, precision, size and blank), create string to be printed ('out'),
-*** fill in 'out'
-*** according to params, fill in 'out' with arg
-*** Nb = size of arg, new_nb = size of arg according to params
-*** Out is filled with '0' when created, used for precision
-*** Precision = -2 if must not print when arg = 0 (see check_params.c)
-**/
-
-char			*itoa_base_signed(va_list ap, t_print *param, int base)
+char				*itoa_base_signed(va_list ap, t_print *param, int base)
 {
 	char		*tab;
 	char		*out;

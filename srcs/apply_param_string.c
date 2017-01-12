@@ -6,14 +6,11 @@
 /*   By: cbegne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 14:12:53 by cbegne            #+#    #+#             */
-/*   Updated: 2017/01/09 15:53:53 by cbegne           ###   ########.fr       */
+/*   Updated: 2017/01/12 11:42:38 by cbegne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/**width, precision, zero_pad, minus
-**/
 
 char	*apply_string(t_print *param, char *out, char *arg, int nb)
 {
